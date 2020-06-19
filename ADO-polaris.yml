@@ -1,0 +1,15 @@
+name: $(Date:yyyyMMdd).$(Rev:.r)
+variables:
+  - group: Polaris
+ 
+jobs:
+- job: Polaris
+  pool:
+    name: private-windows
+  workspace:
+    clean: all
+  steps:
+  - task: CmdLine@2
+    displayName: analyze
+    inputs:
+      script: '$(POLARIS_CLI) analyze -w'
