@@ -5,7 +5,7 @@ variables:
 jobs:
 - job: Polaris
   pool:
-    name: private-windows
+    name: OSIsoft
   workspace:
     clean: all
   steps:
