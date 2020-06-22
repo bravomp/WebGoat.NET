@@ -4,9 +4,10 @@
 # https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
 
 trigger:
-- local
+- OSIsoft
 
 pool:
+  name: OSIsoft
   vmImage: 'windows-latest'
 
 variables:
