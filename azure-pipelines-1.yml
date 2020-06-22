@@ -34,7 +34,7 @@ steps:
       Set-PSDebug -Trace 1
       # Download and run vswhere to get msbuild path
       $uri = "https://github.com/Microsoft/vswhere/releases/latest/download/vswhere.exe"
-      [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls11
+      [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls
       Invoke-WebRequest -Uri $uri -OutFile "vswhere.exe"
       $msbuildPath = vswhere.exe -latest -prerelease -products * -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe
       $msbuildPath = $msbuildPath.substring(0,$msbuildPath.indexOf("\MSBuild.exe"))
