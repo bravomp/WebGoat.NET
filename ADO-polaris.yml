@@ -9,7 +9,7 @@ jobs:
   workspace:
     clean: all
   steps:
-  - task: CmdLine@2
-    displayName: analyze
-    inputs:
-      script: '$(POLARIS_CLI) analyze -w'
+- task: VSBuild@1
+  inputs:
+    solution: '**\*.sln'
+    clean: true
