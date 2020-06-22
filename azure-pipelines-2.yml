@@ -37,4 +37,29 @@ steps:
       $msbuildPath = $msbuildPath.substring(0,$msbuildPath.indexOf("\MSBuild.exe"))
       echo $msbuildPath
       Write-Output ("##vso[task.setvariable variable=msbuildPath;]${msbuildPath}")
-
+- task: PowerShell@2
+  displayName: Get Polaris Path
+  inputs:
+    targetType: 'inline'
+    #msbuildPath: $(msbuildPath)
+    script: |
+      Set-PSDebug -Trace 1
+      echo $Env:Path
+      echo "$(msbuildPath)"
+      echo $Env:MSBUILDPATH
+      # Run polaris
+      echo $Env:POLARIS_SERVER_URL
+      $uri = $Env:POLARIS_SERVER_URL + "/api/tools/polaris_cli-win64.zip"
+      echo $uri
+      Invoke-WebRequest -Uri $uri -OutFile polaris_cli-win64.zip 
+      Set-PSDebug -Off
+      Expand-Archive -LiteralPath polaris_cli-win64.zip 
+      Set-PSDebug -Trace 1
+      $inter_path = Get-Childitem -Path ".\polaris_cli-win64" -name
+      echo $inter_path
+      $polarisPath = -join($pwd, "\polaris_cli-win64\", $inter_path, "\bin")
+      echo $polarisPath
+      Write-Output ("##vso[task.setvariable variable=polarisPath;]${polarisPath}")
+  env:
+    POLARIS_SERVER_URL: https://sipse.polaris.synopsys.com
+    POLARIS_ACCESS_TOKEN: 6dlaj1mv097ih9rb3u53oqhl501jbvun5b7snhfqfhasl68269vg
