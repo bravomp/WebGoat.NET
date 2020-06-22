@@ -72,3 +72,12 @@ steps:
   env:
     POLARIS_SERVER_URL: https://sipse.polaris.synopsys.com
     POLARIS_ACCESS_TOKEN: 6dlaj1mv097ih9rb3u53oqhl501jbvun5b7snhfqfhasl68269vg
+- task: PowerShell@2
+  displayName: Run Polaris Analyze
+  inputs:
+    targetType: 'inline'
+    script: |
+      $Env:Path = "$(polarisPath)" + ";" + "$(msbuildPath)" + ";" + $Env:Path 
+      echo $Env:Path
+      $cmd = '& polaris analyze -w'
+      Invoke-Expression $cmd
