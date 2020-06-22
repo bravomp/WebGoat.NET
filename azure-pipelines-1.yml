@@ -6,7 +6,8 @@
 trigger:
 - master
 
-pool: OSIsoft
+pool: 
+  name: OSIsoft
   vmImage: 'windows-latest'
 
 variables:
