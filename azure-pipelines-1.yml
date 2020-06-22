@@ -27,15 +27,15 @@ steps:
     restoreSolution: '$(solution)'
 
 - task: PowerShell@2
-  displayName: Find MSbuild and Add to Path
+  displayName: Find MSbuild Path
   inputs:
     targetType: 'inline'
     script: |
       Set-PSDebug -Trace 1
       # Download and run vswhere to get msbuild path
-      #%ProgramFiles%\Microsoft Visual Studio\Installer
-      echo Env:ProgramFiles
-      $msbuildPath = 'C:\Program Files\\Microsoft Visual Studio\Installer\vswhere.exe' -latest -prerelease -products * -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe
+      $cmd = "C:\Program Files\\Microsoft Visual Studio\Installer\vswhere.exe -latest -prerelease -products * -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe"
+      Invoke-Expression $cmd
+      #$msbuildPath = 'C:\Program Files\\Microsoft Visual Studio\Installer\vswhere.exe' -latest -prerelease -products * -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe
       $msbuildPath = $msbuildPath.substring(0,$msbuildPath.indexOf("\MSBuild.exe"))
       echo $pwd
       Write-Output ("##vso[task.setvariable variable=msbuildPath;]${msbuildPath}")
