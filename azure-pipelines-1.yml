@@ -13,6 +13,10 @@ variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  # MPB Add the following global variables
+  group: 'Polaris' # variable group
+  msbuildPath: '' # must be initialized to use
+  polarisPath: '' # must be initialized to use
 
 steps:
 - task: NuGetToolInstaller@1
@@ -21,14 +25,17 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
-- task: VSBuild@1
+- task: PowerShell@2
+  displayName: Find MSbuild and Add to Path
   inputs:
-    solution: '$(solution)'
-    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactStagingDirectory)"'
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
-
-- task: VSTest@2
-  inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    targetType: 'inline'
+    script: |
+      Set-PSDebug -Trace 1
+      # Download and run vswhere to get msbuild path
+      $uri = "https://github.com/Microsoft/vswhere/releases/latest/download/vswhere.exe"
+      Invoke-WebRequest -Uri $uri -OutFile "vswhere.exe"
+      $msbuildPath = vswhere.exe -latest -prerelease -products * -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe
+      $msbuildPath = $msbuildPath.substring(0,$msbuildPath.indexOf("\MSBuild.exe"))
+      echo $pwd
+      Write-Output ("##vso[task.setvariable variable=msbuildPath;]${msbuildPath}")
+      echo $env:MSBUILDPATH
