@@ -31,7 +31,7 @@ steps:
     script: |
       Set-PSDebug -Trace 1
       # Run vswhere to get msbuild path
-      $Env:Path = "C:\Program Files\Microsoft Visual Studio\Installer" + ";" + $Env:Path
+      $Env:Path = "C:\Program Files (x86)\Microsoft Visual Studio\Installer" + ";" + $Env:Path
       echo $Env:Path
       $msbuildPath = vswhere.exe -latest -prerelease -products * -requires Microsoft.Component.MSBuild -find MSBuild\**\Bin\MSBuild.exe
       $msbuildPath = $msbuildPath.substring(0,$msbuildPath.indexOf("\MSBuild.exe"))
