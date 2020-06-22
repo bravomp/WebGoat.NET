@@ -26,6 +26,7 @@ steps:
     restoreSolution: '$(solution)'
 
 - task: PowerShell@2
+  displayName: Get MSBuild Path
   inputs:
     targetType: 'inline'
     script: |
@@ -48,16 +49,7 @@ steps:
       echo "$(msbuildPath)"
       echo $Env:MSBUILDPATH
       # Run polaris
-      echo $Env:POLARIS_SERVER_URL
-      $uri = $Env:POLARIS_SERVER_URL + "/api/tools/polaris_cli-win64.zip"
-      echo $uri
-      Invoke-WebRequest -Uri $uri -OutFile polaris_cli-win64.zip 
-      Set-PSDebug -Off
-      Expand-Archive -LiteralPath polaris_cli-win64.zip 
-      Set-PSDebug -Trace 1
-      $inter_path = Get-Childitem -Path ".\polaris_cli-win64" -name
-      echo $inter_path
-      $polarisPath = -join($pwd, "\polaris_cli-win64\", $inter_path, "\bin")
+      $polarisPath = "C:\Polaris\polaris_cli-win64-1.6.99\bin"
       echo $polarisPath
       Write-Output ("##vso[task.setvariable variable=polarisPath;]${polarisPath}")
   env:
