@@ -55,3 +55,20 @@ steps:
   env:
     POLARIS_SERVER_URL: https://sipse.polaris.synopsys.com
     POLARIS_ACCESS_TOKEN: 6dlaj1mv097ih9rb3u53oqhl501jbvun5b7snhfqfhasl68269vg
+- task: PowerShell@2
+  displayName: Run Polaris Setup
+  inputs:
+    targetType: 'inline'
+    script: |
+      Set-PSDebug -Trace 1
+      echo "$(polarisPath)"
+      echo "$(msbuildPath)"
+      $Env:Path = "$(polarisPath)" + ";" + "$(msbuildPath)" + ";" + $Env:Path 
+      echo $Env:Path
+      $cmd = '& polaris setup --project-name mbravo-webgoat-net -e shell="msbuild WebGoat.NET.sln /t:Clean" -b shell="msbuild WebGoat.NET.sln /t:Build"'
+      Invoke-Expression $cmd
+      cat polaris.yml
+      echo $pwd
+  env:
+    POLARIS_SERVER_URL: https://sipse.polaris.synopsys.com
+    POLARIS_ACCESS_TOKEN: 6dlaj1mv097ih9rb3u53oqhl501jbvun5b7snhfqfhasl68269vg
