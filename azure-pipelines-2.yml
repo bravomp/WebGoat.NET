@@ -27,6 +27,7 @@ steps:
 
 - task: PowerShell@2
   displayName: Get MSBuild Path
+  enabled: true
   inputs:
     targetType: 'inline'
     script: |
@@ -40,6 +41,7 @@ steps:
       Write-Output ("##vso[task.setvariable variable=msbuildPath;]${msbuildPath}")
 - task: PowerShell@2
   displayName: Get Polaris Path
+  enabled: true
   inputs:
     targetType: 'inline'
     #msbuildPath: $(msbuildPath)
@@ -57,6 +59,7 @@ steps:
     POLARIS_ACCESS_TOKEN: 6dlaj1mv097ih9rb3u53oqhl501jbvun5b7snhfqfhasl68269vg
 - task: PowerShell@2
   displayName: Run Polaris Setup
+  enabled: true
   inputs:
     targetType: 'inline'
     script: |
@@ -74,6 +77,7 @@ steps:
     POLARIS_ACCESS_TOKEN: 6dlaj1mv097ih9rb3u53oqhl501jbvun5b7snhfqfhasl68269vg
 - task: PowerShell@2
   displayName: Run Polaris Analyze
+  enabled: true
   inputs:
     targetType: 'inline'
     script: |
