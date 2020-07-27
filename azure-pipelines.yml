@@ -35,3 +35,7 @@ steps:
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+- task: synopsys-polaris-task@1
+  inputs:
+    polarisService: 'Sipse'
+    polarisCommand: 'analyze -w'
