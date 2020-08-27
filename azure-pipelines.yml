@@ -31,7 +31,7 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
+- task: SynopsysPolaris@1
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    polarisService: 'SIPSE'
+    polarisCommand: 'polaris analyze -w'
