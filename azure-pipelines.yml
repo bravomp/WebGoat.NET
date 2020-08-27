@@ -34,4 +34,4 @@ steps:
 - task: SynopsysPolaris@1
   inputs:
     polarisService: 'SIPSE'
-    polarisCommand: 'polaris analyze -w'
+    polarisCommand: 'analyze -w'
