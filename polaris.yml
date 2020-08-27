@@ -1,0 +1,44 @@
+version: "1"
+project:
+  name: WebGoat.NET-master
+  branch: WebGoat.NET-master
+  revision:
+    name: WebGoat.NET-master
+    date: 2020-05-22T15:02:20Z
+capture:
+  build:
+    cleanCommands:
+    - shell: [msbuild, '${env.SOLUTION}', '/t:Clean']
+    buildCommands:
+    - shell: [msbuild, '${env.SOLUTION}', '/t:Build']
+  fileSystem:
+    ears:
+      extensions: [ear]
+      files:
+      - directory: ${project.projectDir}
+    java:
+      files:
+      - directory: ${project.projectDir}
+    javascript:
+      files:
+      - directory: ${project.projectDir}
+      - excludeRegex: node_modules|bower_components|vendor
+    php:
+      files:
+      - directory: ${project.projectDir}
+    python:
+      files:
+      - directory: ${project.projectDir}
+    ruby:
+      files:
+      - directory: ${project.projectDir}
+    wars:
+      extensions: [war]
+      files:
+      - directory: ${project.projectDir}
+analyze:
+  mode: central
+install:
+  coverity:
+    version: default
+serverUrl: https://sipse.polaris.synopsys.com
