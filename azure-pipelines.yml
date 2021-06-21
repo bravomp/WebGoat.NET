@@ -33,5 +33,8 @@ steps:
 
 - task: SynopsysPolaris@1
   inputs:
-    polarisService: 'SIPSE'
+- task: SynopsysPolaris@1
+  inputs:
+    polarisService: 'Sipse'
     polarisCommand: 'analyze -w'
+    waitForIssues: true
